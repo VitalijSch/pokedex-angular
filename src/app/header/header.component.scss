@@ -1,0 +1,42 @@
+.background-container {
+    background-color: #07242e;
+}
+
+.content-container {
+    max-width: 1920px;
+    height: 200px;
+    margin: 0 auto;
+    padding: 50px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    input {
+        max-width: 300px;
+        width: 100%;
+        height: 30px;
+        border: unset;
+        border-radius: 30px;
+    }
+}
+
+.logo-container {
+
+    img {
+        height: 80px;
+        width: 80px;
+        object-fit: contain;
+    }
+
+    span {
+        font-size: 30px;
+        font-weight: 700;
+        color: white;
+    }
+}

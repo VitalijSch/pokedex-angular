@@ -1,0 +1,7 @@
+<div class="background-container">
+    <div class="content-container">
+        @for (name of apiService.pokemonNames; track $index) {
+        <app-card [name]="name" [index]="$index"></app-card>
+        }
+    </div>
+</div>

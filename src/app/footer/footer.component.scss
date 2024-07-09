@@ -1,0 +1,41 @@
+.background-container {
+    background-color: #07242e;
+}
+
+.content-container {
+    max-width: 1920px;
+    height: 200px;
+    margin: 0 auto;
+    padding: 50px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .copyright {
+        font-size: 24px;
+        color: #415d64;
+    }
+}
+
+.logo-container {
+
+    img {
+        height: 100px;
+        width: 100px;
+        object-fit: contain;
+    }
+
+    span {
+        font-size: 30px;
+        font-weight: 700;
+        color: white;
+    }
+}

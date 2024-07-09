@@ -1,0 +1,11 @@
+.background-container {
+    background-color: #0c1820;
+}
+
+.content-container {
+    max-width: 1920px;
+    height: calc(100vh - 400px);
+    margin: 0 auto;
+    padding: 50px 100px 0 100px;
+    overflow-y: auto;
+}
