@@ -1,13 +1,26 @@
 <div class="card-container">
     <div class="card-header-container">
-        <span>#{{index +1}}</span>
-        <span>{{name}}</span>
+        <span>#{{pokemon.id}}</span>
+        <span>{{pokemon.name | titlecase}}</span>
     </div>
-    <div [ngStyle]="{'background-color': 'green'}" class="card-img-container">
-        <img src="./assets/img/header/logo.png" alt="pokemon">
+    @if(pokemon.types.length === 1){
+    <div [ngStyle]="{'background-color': getColor(pokemon.types[0].type.name)}" class="card-img-container">
+        <img src="{{pokemon.sprites.other.dream_world.front_default}}" alt="pokemon">
     </div>
+    }
+    @if(pokemon.types.length > 1){
+    <div [ngStyle]="{'background': getGradient(pokemon.types)}" class="card-img-container">
+        <img src="{{pokemon.sprites.other.dream_world.front_default}}" alt="pokemon">
+    </div>
+    }
     <div class="card-footer-container">
-        <img src="./assets/img/footer/logo.png" alt="type">
-        <img src="./assets/img/footer/logo.png" alt="type">
+        <div [ngStyle]="{'color': getColor(pokemon.types[0].type.name)}">
+            {{pokemon.types[0].type.name| titlecase}}
+        </div>
+        @if(pokemon.types.length > 1){
+        <div [ngStyle]="{'color': getColor(pokemon.types[1].type.name)}">
+            {{pokemon.types[1].type.name| titlecase}}
+        </div>
+        }
     </div>
 </div>

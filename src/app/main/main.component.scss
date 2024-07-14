@@ -4,8 +4,14 @@
 
 .content-container {
     max-width: 1920px;
+    width: 100%;
     height: calc(100vh - 400px);
     margin: 0 auto;
-    padding: 50px 100px 0 100px;
+    padding: 20px 25px;
     overflow-y: auto;
+    scrollbar-width: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 20px;
 }

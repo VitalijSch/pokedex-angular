@@ -4,20 +4,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  public url = 'https://pokeapi.co/api/v2/pokemon/';
+  public pokemons: any[] = [];
+  public filteredPokemons: any[] = [];
 
-  public pokemonNames: string[] = [];
+  public startLoad: number = 0;
+  public endLoad: number = 20;
 
-  public async getPokemon() {
-    try {
-      const response = await fetch(this.url);
-      if (!response.ok) {
-        throw new Error('Netzwerkantwort war nicht in Ordnung');
-      }
+  constructor() {
+    this.getPokemons();
+    this.filteredPokemons = this.pokemons;
+  }
+
+  public async getPokemons(): Promise<void> {
+    if (this.endLoad >= 1025) {
+      this.endLoad = 1025;
+    }
+    for (let i = this.startLoad; i < this.endLoad; i++) {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}`);
       const data = await response.json();
-        this.pokemonNames.push(data);
-    } catch (error) {
-      console.error('Error fetching Pokemon:', error);
+      this.pokemons.push(data);
     }
   }
 }

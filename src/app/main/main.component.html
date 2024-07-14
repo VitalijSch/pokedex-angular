@@ -1,7 +1,7 @@
 <div class="background-container">
-    <div class="content-container">
-        @for (name of apiService.pokemonNames; track $index) {
-        <app-card [name]="name" [index]="$index"></app-card>
+    <div class="content-container" (scroll)="onScroll($event)">
+        @for (pokemon of apiService.filteredPokemons; track $index) {
+        <app-card [pokemon]="pokemon"></app-card>
         }
     </div>
 </div>

@@ -4,6 +4,6 @@
             <img src="./assets/img/header/logo.png" alt="logo">
             <span>Pokedex</span>
         </div>
-        <input type="text" name="search" id="search">
+        <input [(ngModel)]="search" (input)="searchPokemon()" type="text" name="search" id="search">
     </div>
 </div>
