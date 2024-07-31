@@ -1,24 +1,18 @@
-<div class="card-container">
+<div (click)="bigCardService.saveCurrentPokemon(pokemon)" class="card-container">
     <div class="card-header-container">
-        <span>#{{pokemon.id}}</span>
         <span>{{pokemon.name | titlecase}}</span>
+        <span>{{bigCardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
     </div>
-    @if(pokemon.types.length === 1){
-    <div [ngStyle]="{'background-color': getColor(pokemon.types[0].type.name)}" class="card-img-container">
+    <div [ngStyle]="{'background': pokemon.types.length === 1 ? bigCardService.getColor(pokemon.types[0].type.name) : bigCardService.getGradient(pokemon.types)}"
+        class="card-img-container">
         <img src="{{pokemon.sprites.other.dream_world.front_default}}" alt="pokemon">
     </div>
-    }
-    @if(pokemon.types.length > 1){
-    <div [ngStyle]="{'background': getGradient(pokemon.types)}" class="card-img-container">
-        <img src="{{pokemon.sprites.other.dream_world.front_default}}" alt="pokemon">
-    </div>
-    }
     <div class="card-footer-container">
-        <div [ngStyle]="{'color': getColor(pokemon.types[0].type.name)}">
+        <div [ngStyle]="{'background-color': bigCardService.getColor(pokemon.types[0].type.name)}">
             {{pokemon.types[0].type.name| titlecase}}
         </div>
         @if(pokemon.types.length > 1){
-        <div [ngStyle]="{'color': getColor(pokemon.types[1].type.name)}">
+        <div [ngStyle]="{'background-color': bigCardService.getColor(pokemon.types[1].type.name)}">
             {{pokemon.types[1].type.name| titlecase}}
         </div>
         }

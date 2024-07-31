@@ -1,0 +1,84 @@
+.background-container {
+    background-color: rgb(12, 24, 32, 0.6);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.big-card-container {
+    background-color: #07242e;
+    width: 30%;
+    border-radius: 20px;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.big-card-top-container {
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.big-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 36px;
+    padding: 30px;
+}
+
+.big-card-type {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 30px 30px 30px;
+
+    div {
+        color: white;
+        text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
+        font-size: 24px;
+        font-weight: 700;
+        padding: 5px 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        border-radius: 50px;
+        text-align: center;
+    }
+}
+
+.big-card-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        min-width: 250px;
+        min-height: 250px;
+    }
+}
+
+.big-card-bottom-container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    h2 {
+        font-size: 30px;
+    }
+}

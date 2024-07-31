@@ -1,0 +1,32 @@
+<div (click)="closeBigCard()" class="background-container">
+    <div (click)="$event.stopPropagation()" class="big-card-container">
+        <div [ngStyle]="{'background': pokemon.types.length === 1 ? bigCardService.getColor(pokemon.types[0].type.name) : bigCardService.getGradient(pokemon.types)}"
+            class="big-card-top-container">
+            <div class="big-card-header">
+                <span>{{pokemon.name | titlecase}}</span>
+                <span>{{bigCardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
+            </div>
+            <div class="big-card-type">
+                <div [ngStyle]="{'background-color': bigCardService.getColor(pokemon.types[0].type.name)}">
+                    {{pokemon.types[0].type.name| titlecase}}
+                </div>
+                @if(pokemon.types.length > 1){
+                <div [ngStyle]="{'background-color': bigCardService.getColor(pokemon.types[1].type.name)}">
+                    {{pokemon.types[1].type.name| titlecase}}
+                </div>
+                }
+            </div>
+            <div class="big-card-img-container">
+                <img src="{{pokemon.sprites.other.dream_world.front_default}}" alt="pokemon">
+            </div>
+        </div>
+        <div class="big-card-bottom-container">
+            <h2>Pokemon stats</h2>
+            <div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam repellendus minima, atque dolor nemo
+                corrupti ipsum omnis pariatur deserunt, velit perferendis! Aliquid mollitia assumenda veniam sunt autem
+                corporis, laborum illo?
+            </div>
+        </div>
+    </div>
+</div>
