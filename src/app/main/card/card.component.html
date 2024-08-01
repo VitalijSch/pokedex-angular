@@ -1,11 +1,11 @@
 <div (click)="bigCardService.saveCurrentPokemon(pokemon)" class="card-container">
     <div class="card-header-container">
-        <span>{{pokemon.name | titlecase}}</span>
+        <h2>{{pokemon.name | titlecase}}</h2>
         <span>{{bigCardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
     </div>
     <div [ngStyle]="{'background': pokemon.types.length === 1 ? bigCardService.getColor(pokemon.types[0].type.name) : bigCardService.getGradient(pokemon.types)}"
         class="card-img-container">
-        <img src="{{pokemon.sprites.other.dream_world.front_default}}" alt="pokemon">
+        <img src="{{pokemon['sprites']['other']['official-artwork']['front_default']}}" alt="pokemon">
     </div>
     <div class="card-footer-container">
         <div [ngStyle]="{'background-color': bigCardService.getColor(pokemon.types[0].type.name)}">

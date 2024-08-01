@@ -5,27 +5,28 @@ import { Injectable } from '@angular/core';
 })
 export class BigCardService {
   public types: any[] = [
-    { 'normal': '#ACAD99' },
-    { 'fire': '#E87A3D' },
-    { 'water': '#639CE4' },
-    { 'electric': '#E7C536' },
-    { 'grass': '#82C95B' },
-    { 'ice': '#81CFD7' },
-    { 'fighting': '#C45D4C' },
-    { 'poison': '#B369AF' },
-    { 'ground': '#CEB250' },
-    { 'flying': '#90AAD7' },
-    { 'psychic': '#E96C95' },
-    { 'bug': '#ACC23E' },
-    { 'rock': '#BAA85E' },
-    { 'ghost': '#816DB6' },
-    { 'dragon': '#8572C8' },
-    { 'dark': '#79726B' },
-    { 'steel': '#9FA9AF' },
-    { 'fairy': '#E8B0EB' }
+    { 'normal': 'rgb(142,131,103)' },
+    { 'fire': 'rgb(205,62,37)' },
+    { 'water': 'rgb(27,125,224)' },
+    { 'electric': 'rgb(221,163,13)' },
+    { 'grass': 'rgb(88,169,49)' },
+    { 'ice': 'rgb(29,166,196)' },
+    { 'fighting': 'rgb(126,49,27)' },
+    { 'poison': 'rgb(141,55,124)' },
+    { 'ground': 'rgb(175,135,36)' },
+    { 'flying': 'rgb(116,137,221)' },
+    { 'psychic': 'rgb(208,63,114)' },
+    { 'bug': 'rgb(151,166,20)' },
+    { 'rock': 'rgb(179,175,168)' },
+    { 'ghost': 'rgb(63,63,150)' },
+    { 'dragon': 'rgb(86,57,200)' },
+    { 'dark': 'rgb(77,60,48)' },
+    { 'steel': 'rgb(133,131,168)' },
+    { 'fairy': 'rgb(209,124,209)' }
   ];
 
   public currentPokemon!: any;
+  public currentNavigation: number = 1;
 
   public saveCurrentPokemon(pokemon: any): void {
     this.currentPokemon = pokemon;
@@ -53,5 +54,9 @@ export class BigCardService {
       return '#0';
     }
     return '#';
+  }
+
+  public showCurrentNavigation(number: number): void {
+    this.currentNavigation = number;
   }
 }
