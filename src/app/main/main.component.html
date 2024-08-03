@@ -4,4 +4,7 @@
         <app-card [pokemon]="pokemon"></app-card>
         }
     </div>
+    @if(apiService.loadingPokemon){
+    <app-loading-screen></app-loading-screen>
+    }
 </div>

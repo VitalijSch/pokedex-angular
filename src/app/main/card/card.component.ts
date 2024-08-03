@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-import { BigCardService } from '../../services/big-card/big-card.service';
+import { CardService } from '../../services/card/card.service';
 
 @Component({
   selector: 'app-card',
@@ -14,5 +14,5 @@ import { BigCardService } from '../../services/big-card/big-card.service';
 export class CardComponent {
   @Input() pokemon!: any;
 
-  public bigCardService: BigCardService = inject(BigCardService);
+  public cardService: CardService = inject(CardService);
 }

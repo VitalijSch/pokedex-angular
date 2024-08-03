@@ -40,16 +40,10 @@
         font-weight: 900;
     }
 
-    .logo-id {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-
-        span {
-            font-size: 40px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 900;
-        }
+    span {
+        font-size: 60px;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 900;
     }
 }
 
@@ -83,6 +77,12 @@
     img {
         min-width: 250px;
         min-height: 250px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.2);
+        }
     }
 }
 

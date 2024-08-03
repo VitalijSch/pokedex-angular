@@ -3,26 +3,26 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class BigCardService {
+export class CardService {
   public types: any[] = [
-    { 'normal': 'rgb(142,131,103)' },
-    { 'fire': 'rgb(205,62,37)' },
-    { 'water': 'rgb(27,125,224)' },
-    { 'electric': 'rgb(221,163,13)' },
-    { 'grass': 'rgb(88,169,49)' },
-    { 'ice': 'rgb(29,166,196)' },
-    { 'fighting': 'rgb(126,49,27)' },
-    { 'poison': 'rgb(141,55,124)' },
-    { 'ground': 'rgb(175,135,36)' },
-    { 'flying': 'rgb(116,137,221)' },
-    { 'psychic': 'rgb(208,63,114)' },
-    { 'bug': 'rgb(151,166,20)' },
-    { 'rock': 'rgb(179,175,168)' },
-    { 'ghost': 'rgb(63,63,150)' },
-    { 'dragon': 'rgb(86,57,200)' },
-    { 'dark': 'rgb(77,60,48)' },
-    { 'steel': 'rgb(133,131,168)' },
-    { 'fairy': 'rgb(209,124,209)' }
+    { 'Normal': 'rgb(142,131,103)' },
+    { 'Feuer': 'rgb(205,62,37)' },
+    { 'Wasser': 'rgb(27,125,224)' },
+    { 'Elektro': 'rgb(221,163,13)' },
+    { 'Pflanze': 'rgb(88,169,49)' },
+    { 'Eis': 'rgb(29,166,196)' },
+    { 'Kampf': 'rgb(126,49,27)' },
+    { 'Gift': 'rgb(141,55,124)' },
+    { 'Boden': 'rgb(175,135,36)' },
+    { 'Flug': 'rgb(116,137,221)' },
+    { 'Psycho': 'rgb(208,63,114)' },
+    { 'Käfer': 'rgb(151,166,20)' },
+    { 'Gestein': 'rgb(179,175,168)' },
+    { 'Gespenst': 'rgb(63,63,150)' },
+    { 'Drache': 'rgb(86,57,200)' },
+    { 'Unlicht': 'rgb(77,60,48)' },
+    { 'Stahl': 'rgb(133,131,168)' },
+    { 'Fee': 'rgb(209,124,209)' }
   ];
 
   public currentPokemon!: any;
@@ -45,12 +45,6 @@ export class BigCardService {
 
   public handleZero(pokemonId: number): string {
     if (pokemonId <= 9) {
-      return '#000';
-    }
-    if (pokemonId <= 99) {
-      return '#00';
-    }
-    if (pokemonId <= 999) {
       return '#0';
     }
     return '#';

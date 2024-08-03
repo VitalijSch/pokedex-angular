@@ -5,7 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { FooterComponent } from './footer/footer.component';
 import { BigCardComponent } from './big-card/big-card.component';
-import { BigCardService } from './services/big-card/big-card.service';
+import { CardService } from './services/card/card.service';
 
 @Component({
   selector: 'app-root',
@@ -22,5 +22,5 @@ import { BigCardService } from './services/big-card/big-card.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  public bigCardService: BigCardService = inject(BigCardService);
+  public cardService: CardService = inject(CardService);
 }

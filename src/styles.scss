@@ -44,6 +44,15 @@ body {
     background: blue;
 }
 
+@keyframes spin {
+    0% {
+      transform: rotate(0deg); /* Startwinkel */
+    }
+    100% {
+      transform: rotate(360deg); /* Endwinkel */
+    }
+  }
+
 /* roboto-100 - latin */
 @font-face {
     font-display: swap;
