@@ -3,17 +3,17 @@
         <h2>{{pokemon.name | titlecase}}</h2>
         <span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
     </div>
-    <div [ngStyle]="{'background': pokemon.types.length === 1 ? cardService.getColor(pokemon.types[0].type.name) : cardService.getGradient(pokemon.types)}"
+    <div [ngStyle]="{'background': !pokemon.types.secondType ? cardService.getColor(pokemon.types.firstType) : cardService.getGradient(pokemon.types)}"
         class="card-img-container">
-        <img src="{{pokemon['sprites']['other']['official-artwork']['front_default']}}" alt="pokemon">
+        <img src="{{pokemon.img}}" alt="pokemon">
     </div>
     <div class="card-footer-container">
-        <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types[0].type.name)}">
-            {{pokemon.types[0].type.name| titlecase}}
+        <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types.firstType)}">
+            {{pokemon.types.firstType| titlecase}}
         </div>
-        @if(pokemon.types.length > 1){
-        <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types[1].type.name)}">
-            {{pokemon.types[1].type.name| titlecase}}
+        @if(pokemon.types.secondType){
+        <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types.secondType)}">
+            {{pokemon.types.secondType| titlecase}}
         </div>
         }
     </div>

@@ -37,9 +37,9 @@ export class CardService {
     return type ? type[typeName] : '#000';
   }
 
-  public getGradient(types: any[]): string {
-    const color1 = this.getColor(types[0].type.name);
-    const color2 = this.getColor(types[1].type.name);
+  public getGradient(types: any): string {
+    const color1 = this.getColor(types.firstType);
+    const color2 = this.getColor(types.secondType);
     return `linear-gradient(to bottom, ${color1}, ${color2})`;
   }
 

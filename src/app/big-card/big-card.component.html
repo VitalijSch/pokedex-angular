@@ -1,41 +1,42 @@
 <div (click)="closeBigCard()" class="background-container">
     <div (click)="$event.stopPropagation()" class="big-card-container">
-        <div [ngStyle]="{'background': pokemon.types.length === 1 ? cardService.getColor(pokemon.types[0].type.name) : cardService.getGradient(pokemon.types)}"
+        <div [ngStyle]="{'background': !pokemon.types.secondType ? cardService.getColor(pokemon.types.firstType) : cardService.getGradient(pokemon.types)}"
             class="big-card-top-container">
             <div class="big-card-header">
                 <h2>{{pokemon.name | titlecase}}</h2>
                 <span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
             </div>
             <div class="big-card-type">
-                <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types[0].type.name)}">
-                    {{pokemon.types[0].type.name| titlecase}}
+                <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types.firstType)}">
+                    {{pokemon.types.firstType| titlecase}}
                 </div>
-                @if(pokemon.types.length > 1){
-                <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types[1].type.name)}">
-                    {{pokemon.types[1].type.name| titlecase}}
+                @if(pokemon.types.secondType){
+                <div [ngStyle]="{'background-color': cardService.getColor(pokemon.types.secondType)}">
+                    {{pokemon.types.secondType| titlecase}}
                 </div>
                 }
             </div>
             <div class="big-card-img-container">
-                <img (click)="pokemonCrie(pokemon.id)" src="{{pokemon['sprites']['other']['official-artwork']['front_default']}}" alt="pokemon">
+                <img (click)="pokemonCrie()" src="{{pokemon.img}}" alt="pokemon">
             </div>
         </div>
         <div class="big-card-bottom-container">
             <div class="navigation-container">
                 <h2 (click)="cardService.showCurrentNavigation(0)"
-                    [class.underline-fixed]="cardService.currentNavigation === 0" class="underline-animation">Base
-                    Stats</h2>
+                    [class.underline-fixed]="cardService.currentNavigation === 0" class="underline-animation">
+                    About
+                </h2>
                 <h2 (click)="cardService.showCurrentNavigation(1)"
-                    [class.underline-fixed]="cardService.currentNavigation === 1" class="underline-animation">About
+                    [class.underline-fixed]="cardService.currentNavigation === 1" class="underline-animation">
+                    Statuswerte
                 </h2>
                 <h2 (click)="cardService.showCurrentNavigation(2)"
                     [class.underline-fixed]="cardService.currentNavigation === 2" class="underline-animation">
-                    Evolution</h2>
+                    Evolution
+                </h2>
             </div>
             <div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam repellendus minima, atque dolor nemo
-                corrupti ipsum omnis pariatur deserunt, velit perferendis! Aliquid mollitia assumenda veniam sunt autem
-                corporis, laborum illo?
+                <app-status-values></app-status-values>
             </div>
         </div>
     </div>

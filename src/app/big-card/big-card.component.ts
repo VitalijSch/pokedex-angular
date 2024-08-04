@@ -1,12 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardService } from '../services/card/card.service';
+import { StatusValuesComponent } from './status-values/status-values.component';
 
 @Component({
   selector: 'app-big-card',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    StatusValuesComponent
   ],
   templateUrl: './big-card.component.html',
   styleUrl: './big-card.component.scss'
@@ -20,11 +22,10 @@ export class BigCardComponent {
     this.cardService.currentPokemon = undefined;
   }
 
-  public pokemonCrie(id: number): Promise<void> {
+  public pokemonCrie(): Promise<void> {
     const audioElement = new Audio();
-    const crie = (`https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`);
-    audioElement.src = crie;
-    audioElement.volume = 0.1;
+    audioElement.src = this.pokemon.crie;
+    audioElement.volume = 0.5;
     return audioElement.play();
   }
 }
