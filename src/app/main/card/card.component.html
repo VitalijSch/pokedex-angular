@@ -1,10 +1,10 @@
-<div (click)="cardService.saveCurrentPokemon(pokemon)" class="card-container">
+<div (click)="openBigCard()" class="card-container"
+    [ngStyle]="{'background': !pokemon.types.secondType ? cardService.getColor(pokemon.types.firstType) : cardService.getGradient(pokemon.types)}">
     <div class="card-header-container">
         <h2>{{pokemon.name | titlecase}}</h2>
         <span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
     </div>
-    <div [ngStyle]="{'background': !pokemon.types.secondType ? cardService.getColor(pokemon.types.firstType) : cardService.getGradient(pokemon.types)}"
-        class="card-img-container">
+    <div class="card-img-container">
         <img src="{{pokemon.img}}" alt="pokemon">
     </div>
     <div class="card-footer-container">

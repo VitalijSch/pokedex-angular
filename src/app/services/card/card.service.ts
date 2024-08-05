@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Pokemon } from '../../interfaces/pokemon';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +27,9 @@ export class CardService {
     { 'Fee': 'rgb(209,124,209)' }
   ];
 
-  public currentPokemon!: any;
+  public currentPokemon!: Pokemon;
+  public isOpen: boolean = false;
   public currentNavigation: number = 1;
-
-  public saveCurrentPokemon(pokemon: any): void {
-    this.currentPokemon = pokemon;
-  }
 
   public getColor(typeName: string): string {
     const type = this.types.find(t => t[typeName]);
@@ -52,5 +51,9 @@ export class CardService {
 
   public showCurrentNavigation(number: number): void {
     this.currentNavigation = number;
+  }
+
+  public handleBigCard(): void {
+    this.isOpen = !this.isOpen;
   }
 }

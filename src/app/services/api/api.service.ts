@@ -35,7 +35,6 @@ export class ApiService {
     await this.fetchPokemonTypes();
     await this.fetchPokemonStats();
     await this.loadPokemons();
-    this.loadingPokemon = false;
   }
 
   private async fetchPokemonTypes(): Promise<void> {
@@ -65,6 +64,7 @@ export class ApiService {
   }
 
   public async loadPokemons(): Promise<void> {
+    this.loadingPokemon = true;
     for (let i = this.startLoad; i < this.endLoad; i++) {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i + 1}`);
       const data = await response.json();
@@ -75,6 +75,7 @@ export class ApiService {
       this.pokemons.push(this.pokemon);
       this.resetPokemon();
     }
+    this.loadingPokemon = false;
     console.log(this.pokemons)
   }
 

@@ -1,7 +1,7 @@
 <div (click)="closeBigCard()" class="background-container">
-    <div (click)="$event.stopPropagation()" class="big-card-container">
-        <div [ngStyle]="{'background': !pokemon.types.secondType ? cardService.getColor(pokemon.types.firstType) : cardService.getGradient(pokemon.types)}"
-            class="big-card-top-container">
+    <div (click)="$event.stopPropagation()" class="big-card-container"
+        [ngStyle]="{'background': !pokemon.types.secondType ? cardService.getColor(pokemon.types.firstType) : cardService.getGradient(pokemon.types)}">
+        <div class="big-card-top-container">
             <div class="big-card-header">
                 <h2>{{pokemon.name | titlecase}}</h2>
                 <span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span>
@@ -17,8 +17,18 @@
                 }
             </div>
             <div class="big-card-img-container">
-                <img (click)="pokemonCrie()" src="{{pokemon.img}}" alt="pokemon">
+                <img (click)="pokemonCrie()" class="img-animation" src="{{pokemon.img}}" alt="pokemon">
             </div>
+        </div>
+        <div class="svg-container">
+            <svg (click)="perviousPokemon()" xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 80 80">
+                <polygon class="wip-left" points="0,25 30,5 30,20 80,20 80,30 30,30 30,45"
+                    style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
+            </svg>
+            <svg (click)="nextPokemon()" xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 80 80">
+                <polygon class="wip-right" points="50,5 80,25 50,45 50,30 0,30 0,20 50,20"
+                    style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
+            </svg>
         </div>
         <div class="big-card-bottom-container">
             <div class="navigation-container">

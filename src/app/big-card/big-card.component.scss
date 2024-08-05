@@ -52,7 +52,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 0 30px 30px 30px;
+    padding: 0 30px;
 
     div {
         color: white;
@@ -78,22 +78,84 @@
     img {
         min-width: 250px;
         min-height: 250px;
-        transition: transform 0.3s ease;
         cursor: pointer;
+        animation: zoom 4s ease-in-out infinite;
+    }
 
-        &:hover {
-            transform: scale(1.2);
+    @keyframes zoom {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+}
+
+.svg-container {
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+        cursor: pointer;
+        position: relative;
+        z-index: 9999;
+    }
+
+    .wip-left {
+        animation: wipLeft 1.5s ease-in-out infinite;
+    }
+
+    .wip-right {
+        animation: wipRight 1.5s ease-in-out infinite;
+    }
+
+    @keyframes wipLeft {
+        0% {
+            transform: translateX(0%);
+        }
+
+        50% {
+            transform: translateX(-10%);
+        }
+
+        100% {
+            transform: translateX(0%);
+        }
+    }
+
+    @keyframes wipRight {
+        0% {
+            transform: translateX(0%);
+        }
+
+        50% {
+            transform: translateX(10%);
+        }
+
+        100% {
+            transform: translateX(0%);
         }
     }
 }
 
 .big-card-bottom-container {
     padding: 30px;
+    margin: 20px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
+    background-color: #0d1921;
 
     .navigation-container {
         width: 100%;

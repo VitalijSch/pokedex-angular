@@ -12,9 +12,7 @@ import { CardService } from '../../services/card/card.service';
 export class StatusValuesComponent {
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
 
-  public cardService: CardService = inject(CardService);
-
-  public pokemon: any = this.cardService.currentPokemon;
+  private cardService: CardService = inject(CardService);
 
   ngAfterViewInit(): void {
     const ctx = this.myChart.nativeElement.getContext('2d');
@@ -24,11 +22,11 @@ export class StatusValuesComponent {
     }
 
     const data = {
-      labels: this.pokemon.stats.map((stat: { name: any; }) => stat.name),
+      labels: this.cardService.currentPokemon.stats.map((stat: { name: any; }) => stat.name),
       datasets: [{
         label: 'Pokémon Stats',
-        data: this.pokemon.stats.map((stat: { stat: any; }) => stat.stat),
-        backgroundColor: this.pokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? 'red' : 'green'),
+        data: this.cardService.currentPokemon.stats.map((stat: { stat: any; }) => stat.stat),
+        backgroundColor: this.cardService.currentPokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? 'red' : 'green'),
         borderColor: 'black',
         borderWidth: 1,
       }],
@@ -54,8 +52,8 @@ export class StatusValuesComponent {
           dataPoint.y = top + barHeight * (index + 0.8);
 
           // Draw label
-          ctx.font = '24px sans-serif bold';
-          ctx.fillStyle = 'rgba(100, 100, 100, 1)';
+          ctx.font = '24px sans-serif';
+          ctx.fillStyle = 'white';
           ctx.textBaseline = 'middle';
           ctx.fillText(label, left - 200, dataPoint.y);
 
