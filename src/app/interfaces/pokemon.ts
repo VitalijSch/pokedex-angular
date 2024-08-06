@@ -11,4 +11,6 @@ export interface Pokemon {
         name: string;
         stat: number;
     }>;
+    evolution: string;
+    evolutionFrom: string;
 }

@@ -33,7 +33,7 @@ export class MainComponent {
     this.isLoading = true;
     this.apiService.startLoad = this.apiService.startLoad + 20;
     this.apiService.endLoad = this.apiService.endLoad + 20;
-    await this.apiService.loadPokemons();
+    await this.apiService.fetchPokemons();
     this.isLoading = false;
   }
 }

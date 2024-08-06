@@ -20,7 +20,7 @@ export class CardService {
     { 'Psycho': 'rgb(208,63,114)' },
     { 'Käfer': 'rgb(151,166,20)' },
     { 'Gestein': 'rgb(179,175,168)' },
-    { 'Gespenst': 'rgb(63,63,150)' },
+    { 'Geist': 'rgb(63,63,150)' },
     { 'Drache': 'rgb(86,57,200)' },
     { 'Unlicht': 'rgb(77,60,48)' },
     { 'Stahl': 'rgb(133,131,168)' },

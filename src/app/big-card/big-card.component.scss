@@ -149,10 +149,10 @@
 .big-card-bottom-container {
     padding: 30px;
     margin: 20px;
+    min-height: 540px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 20px;
     background-color: #0d1921;
@@ -166,6 +166,85 @@
         h2 {
             font-size: 30px;
             cursor: pointer;
+        }
+
+        .underline-animation {
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .underline-animation::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: rgb(248, 58, 53);
+            transition: width 0.5s ease;
+        }
+
+        .underline-animation:hover::after {
+            width: 100%;
+        }
+
+        .underline-fixed {
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .underline-fixed::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: rgb(85, 132, 198);
+        }
+    }
+
+    canvas {
+        width: 100% !important;
+    }
+
+    .evolution-container {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .pokemon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            img {
+                width: 110px;
+                height: 110px;
+            }
+
+            span {
+                font-size: 24px;
+                text-align: center;
+
+                span {
+                    color: rgba(255, 255, 255, 0.6);
+                    font-weight: 900;
+                }
+            }
+        }
+
+        svg {
+            min-width: 40px;
         }
     }
 }

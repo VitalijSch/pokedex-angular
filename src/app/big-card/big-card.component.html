@@ -21,7 +21,8 @@
             </div>
         </div>
         <div class="svg-container">
-            <svg (click)="perviousPokemon()" xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 80 80">
+            <svg (click)="perviousPokemon()" xmlns="http://www.w3.org/2000/svg" width="120" height="60"
+                viewBox="0 0 80 80">
                 <polygon class="wip-left" points="0,25 30,5 30,20 80,20 80,30 30,30 30,45"
                     style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
             </svg>
@@ -36,17 +37,31 @@
                     [class.underline-fixed]="cardService.currentNavigation === 0" class="underline-animation">
                     About
                 </h2>
-                <h2 (click)="cardService.showCurrentNavigation(1)"
-                    [class.underline-fixed]="cardService.currentNavigation === 1" class="underline-animation">
+                <h2 (click)="showCurrentStats()" [class.underline-fixed]="cardService.currentNavigation === 1"
+                    class="underline-animation">
                     Statuswerte
                 </h2>
                 <h2 (click)="cardService.showCurrentNavigation(2)"
                     [class.underline-fixed]="cardService.currentNavigation === 2" class="underline-animation">
-                    Evolution
+                    Entwicklung
                 </h2>
             </div>
-            <div>
-                <app-status-values></app-status-values>
+            <canvas #myChart width="650" height="450"
+                [ngStyle]="{'display': cardService.currentNavigation === 1 ? 'unset' : 'none'}"></canvas>
+            <div class="evolution-container"
+                [ngStyle]="{'display': cardService.currentNavigation === 2 ? 'flex' : 'none'}">
+                @for (pokemon of allEvolutions; track $index) {
+                <div class="pokemon-container">
+                    <img src="{{pokemon.img}}" alt="pokemon">
+                    <span>{{pokemon.name}}<br><span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span></span>
+                </div>
+                @if (!$last) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 80 50">
+                    <polygon class="wip-right" points="50,5 80,25 50,45 50,30 0,30 0,20 50,20"
+                        style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
+                </svg>
+                }
+                }
             </div>
         </div>
     </div>
