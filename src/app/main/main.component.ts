@@ -1,14 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CardComponent } from './card/card.component';
 import { ApiService } from '../services/api/api.service';
-import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 
 @Component({
   selector: 'app-main',
   standalone: true,
   imports: [
-    CardComponent,
-    LoadingScreenComponent
+    CardComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'

@@ -48,7 +48,7 @@ export class BigCardComponent {
       datasets: [{
         label: 'Pokémon Stats',
         data: this.cardService.currentPokemon.stats.map((stat: { stat: any; }) => stat.stat),
-        backgroundColor: this.cardService.currentPokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? 'red' : 'green'),
+        backgroundColor: this.cardService.currentPokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? '#5cc0de' : '#5db85b'),
         borderColor: 'black',
         borderWidth: 1,
       }],

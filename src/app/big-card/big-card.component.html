@@ -35,7 +35,7 @@
             <div class="navigation-container">
                 <h2 (click)="cardService.showCurrentNavigation(0)"
                     [class.underline-fixed]="cardService.currentNavigation === 0" class="underline-animation">
-                    About
+                    Daten
                 </h2>
                 <h2 (click)="showCurrentStats()" [class.underline-fixed]="cardService.currentNavigation === 1"
                     class="underline-animation">
@@ -46,10 +46,39 @@
                     Entwicklung
                 </h2>
             </div>
+            <div class="data-container" [ngStyle]="{'display': cardService.currentNavigation === 0 ? 'flex' : 'none'}">
+                <div class="d-f-g-20">
+                    <span>Kategorie:</span>
+                    <span>{{pokemon.genera}}</span>
+                </div>
+                <div class="d-f-g-20">
+                    <span>Größe:</span>
+                    <span>{{pokemon.height}} m</span>
+                </div>
+                <div class="d-f-g-20">
+                    <span>Gewicht:</span>
+                    <span>{{pokemon.weight}} kg</span>
+                </div>
+                <div class="d-f-g-20">
+                    <span>Ei-Gruppen:</span>
+                    <div>
+                        @for (group of pokemon.eggGroups; track $index) {
+                        <span>{{group}}</span>
+                        @if (!$last) {
+                        <span>,</span>
+                        }
+                        }
+                    </div>
+                </div>
+                <div class="d-f-g-20">
+                    <span>Ei-Schritte:</span>
+                    <span>{{pokemon.eggSteps}}</span>
+                </div>
+            </div>
             <canvas #myChart width="650" height="450"
                 [ngStyle]="{'display': cardService.currentNavigation === 1 ? 'unset' : 'none'}"></canvas>
             <div class="evolution-container"
-                [ngStyle]="{'display': cardService.currentNavigation === 2 ? 'flex' : 'none'}">
+                [ngStyle]="{'display': cardService.currentNavigation === 2 ? 'flex' : 'none', 'justify-content': allEvolutions.length > 3 ? 'flex-start': 'center'}">
                 @for (pokemon of allEvolutions; track $index) {
                 <div class="pokemon-container">
                     <img src="{{pokemon.img}}" alt="pokemon">

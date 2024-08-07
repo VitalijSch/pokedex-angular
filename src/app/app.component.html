@@ -4,3 +4,6 @@
 @if (cardService.isOpen) {
 <app-big-card></app-big-card>
 }
+@if(apiService.loadingPokemon){
+<app-loading-screen></app-loading-screen>
+}

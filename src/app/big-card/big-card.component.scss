@@ -180,7 +180,7 @@
             bottom: 0;
             width: 0;
             height: 2px;
-            background: rgb(248, 58, 53);
+            background: #5cc0de;
             transition: width 0.5s ease;
         }
 
@@ -200,7 +200,40 @@
             bottom: 0;
             width: 100%;
             height: 2px;
-            background: rgb(85, 132, 198);
+            background: #5db85b;
+        }
+    }
+
+    .data-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        margin: auto;
+        font-size: 30px;
+        font-weight: 900;
+
+        .d-f-g-20 {
+            display: flex;
+            gap: 20px;
+
+            span {
+
+                &:first-child {
+                    color: #616161;
+                }
+
+                &:last-child {
+                    color: #d0d0d0;
+                }
+            }
+
+            div {
+
+                span {
+                    color: #d0d0d0;
+                }
+            }
         }
     }
 
@@ -212,7 +245,6 @@
         width: 100%;
         flex: 1;
         display: flex;
-        justify-content: center;
         align-items: center;
         gap: 10px;
         overflow-x: auto;
@@ -228,8 +260,14 @@
             gap: 10px;
 
             img {
-                width: 110px;
-                height: 110px;
+                box-shadow: 0 4px 4px 0px #212121;
+                background-color: #616161;
+                border: 5px solid #fff;
+                border-radius: 50%;
+                padding: 5px;
+                width: 135px;
+                height: 135px;
+                object-fit: contain;
             }
 
             span {
