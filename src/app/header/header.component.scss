@@ -16,10 +16,16 @@
         gap: 10px;
     }
 
+    .loading-pokemon-container {
+        color: white;
+    }
+
     input {
         max-width: 300px;
         width: 100%;
-        height: 30px;
+        height: 50px;
+        padding-left: 30px;
+        font-size: 18px;
         border: unset;
         border-radius: 30px;
         cursor: pointer;

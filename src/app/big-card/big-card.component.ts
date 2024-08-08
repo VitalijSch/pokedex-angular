@@ -19,15 +19,13 @@ export class BigCardComponent {
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
 
   public cardService: CardService = inject(CardService);
-  private apiService: ApiService = inject(ApiService);
+  public apiService: ApiService = inject(ApiService);
 
-  public allEvolutions: any[] = [];
-
-  public pokemon: any = this.cardService.currentPokemon;
+  public pokemon: any = this.apiService.pokemon;
   private chartInstance: Chart | undefined;
 
   ngOnInit(): void {
-    this.showPokemonEvolution();
+ 
   }
 
   ngAfterViewInit(): void {
@@ -44,11 +42,11 @@ export class BigCardComponent {
       this.chartInstance.destroy();
     }
     const data = {
-      labels: this.cardService.currentPokemon.stats.map((stat: { name: any; }) => stat.name),
+      labels: this.pokemon.stats.map((stat: { name: any; }) => stat.name),
       datasets: [{
         label: 'Pokémon Stats',
-        data: this.cardService.currentPokemon.stats.map((stat: { stat: any; }) => stat.stat),
-        backgroundColor: this.cardService.currentPokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? '#5cc0de' : '#5db85b'),
+        data: this.pokemon.stats.map((stat: { stat: any; }) => stat.stat),
+        backgroundColor: this.pokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? '#5cc0de' : '#5db85b'),
         borderColor: 'black',
         borderWidth: 1,
       }],
@@ -134,63 +132,91 @@ export class BigCardComponent {
     return audioElement.play();
   }
 
-  public nextPokemon(): void {
+  public async nextPokemon(): Promise<void> {
+    let currentIndex = this.apiService.pokemons.indexOf(this.pokemon);
     this.apiService.pokemons.forEach((pokemon, index) => {
-      if (this.pokemon.id === this.apiService.endLoad) {
-        this.cardService.currentPokemon = this.apiService.pokemons[0];
+      if (currentIndex === this.apiService.pokemons.length - 1) {
+        this.apiService.pokemon = this.apiService.pokemons[0];
       } else {
         if (pokemon.id === this.pokemon.id) {
-          this.cardService.currentPokemon = this.apiService.pokemons[index + 1];
+          this.apiService.pokemon = this.apiService.pokemons[index + 1];
         }
       }
     });
-    this.pokemon = this.cardService.currentPokemon;
+    this.pokemon = this.apiService.pokemon;
     if (this.cardService.currentNavigation === 1) {
       this.createOrUpdateChart();
     }
-    this.showPokemonEvolution();
+    if (this.cardService.currentNavigation === 0) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonData(this.pokemon.id);
+      this.apiService.loadingDescription = false;
+    }
+    if (this.cardService.currentNavigation === 1) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonStats(this.pokemon.id);
+      this.createOrUpdateChart();
+      this.apiService.loadingDescription = false;
+    }
+    if (this.cardService.currentNavigation === 2) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonForEvolution(this.pokemon.id);
+      this.apiService.loadingDescription = false;
+    }
   }
 
-  public perviousPokemon(): void {
+  public async perviousPokemon(): Promise<void> {
+    let currentIndex = this.apiService.pokemons.indexOf(this.pokemon);
     this.apiService.pokemons.forEach((pokemon, index) => {
-      if (this.pokemon.id === 1) {
-        this.cardService.currentPokemon = this.apiService.pokemons[this.apiService.endLoad - 1];
+      if (currentIndex === 0) {
+        this.apiService.pokemon = this.apiService.pokemons[this.apiService.pokemons.length - 1];
       } else {
         if (pokemon.id === this.pokemon.id) {
-          this.cardService.currentPokemon = this.apiService.pokemons[index - 1];
+          this.apiService.pokemon = this.apiService.pokemons[index - 1];
         }
       }
     });
-    this.pokemon = this.cardService.currentPokemon;
+    this.pokemon = this.apiService.pokemon;
     if (this.cardService.currentNavigation === 1) {
       this.createOrUpdateChart();
     }
-    this.showPokemonEvolution();
+    if (this.cardService.currentNavigation === 0) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonData(this.pokemon.id);
+      this.apiService.loadingDescription = false;
+    }
+    if (this.cardService.currentNavigation === 1) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonStats(this.pokemon.id);
+      this.createOrUpdateChart();
+      this.apiService.loadingDescription = false;
+    }
+    if (this.cardService.currentNavigation === 2) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonForEvolution(this.pokemon.id);
+      this.apiService.loadingDescription = false;
+    }
   }
 
-  private showPokemonEvolution(): void {
-    this.allEvolutions = [];
-    this.apiService.allPokemons.forEach(pokemon => {
-      if (pokemon.evolution === this.cardService.currentPokemon.evolution) {
-        this.allEvolutions.push(pokemon);
-      }
-    });
-    this.sortEvolution();
+  public async showPokemonData(): Promise<void> {
+    this.apiService.loadingDescription = true;
+    this.cardService.showCurrentNavigation(0);
+    await this.apiService.loadPokemonData(this.pokemon.id);
+    this.apiService.loadingDescription = false;
   }
 
-  private sortEvolution(): void {
-    this.allEvolutions.forEach((pokemon, index) => {
-      if (pokemon.evolutionFrom === null) {
-        this.allEvolutions.splice(index, 1);
-        this.allEvolutions.unshift(pokemon);
-      }
-    });
-  }
-
-  public showCurrentStats(): void {
+  public async showPokemonStats(): Promise<void> {
+    this.apiService.loadingDescription = true;
     this.cardService.showCurrentNavigation(1);
-    if (this.cardService.currentNavigation === 1) {
-      this.createOrUpdateChart();
-    }
+    await this.apiService.loadPokemonStats(this.pokemon.id);
+    this.createOrUpdateChart();
+    this.apiService.loadingDescription = false;
+  }
+
+  public async showPokemonEvolutions(): Promise<void> {
+    this.apiService.loadingDescription = true;
+    this.cardService.showCurrentNavigation(2);
+    await this.apiService.loadPokemonForEvolution(this.pokemon.id);
+    this.apiService.loadingDescription = false;
   }
 }

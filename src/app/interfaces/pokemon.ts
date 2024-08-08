@@ -3,19 +3,15 @@ export interface Pokemon {
     name: string;
     img: string;
     types: {
-        firstType: string;
-        secondType: string;
+      firstType: string;
+      secondType: string;
     };
     crie: string;
     genera: string;
     height: string;
     weight: string;
-    eggGroups: Array<string>;
+    eggGroups: string[];
     eggSteps: number;
-    stats: Array<{
-        name: string;
-        stat: number;
-    }>;
-    evolution: string;
-    evolutionFrom: string;
+    stats: any[];
+    evolutions: any[];
 }

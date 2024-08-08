@@ -11,6 +11,6 @@
             </svg>
             <h1>Pokédex</h1>
         </div>
-        <input [(ngModel)]="search" (input)="searchPokemon()" type="text" name="search" id="search">
+        <input #searchInput [disabled]="apiService.loadingPokemon" [(ngModel)]="search" (input)="searchPokemon()" type="text" name="search" id="search" placeholder="Pokémon Namen (Englisch)...">
     </div>
 </div>

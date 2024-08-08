@@ -33,63 +33,71 @@
         </div>
         <div class="big-card-bottom-container">
             <div class="navigation-container">
-                <h2 (click)="cardService.showCurrentNavigation(0)"
-                    [class.underline-fixed]="cardService.currentNavigation === 0" class="underline-animation">
+                <h2 (click)="showPokemonData()" [class.underline-fixed]="cardService.currentNavigation === 0"
+                    class="underline-animation">
                     Daten
                 </h2>
-                <h2 (click)="showCurrentStats()" [class.underline-fixed]="cardService.currentNavigation === 1"
+                <h2 (click)="showPokemonStats()" [class.underline-fixed]="cardService.currentNavigation === 1"
                     class="underline-animation">
                     Statuswerte
                 </h2>
-                <h2 (click)="cardService.showCurrentNavigation(2)"
-                    [class.underline-fixed]="cardService.currentNavigation === 2" class="underline-animation">
-                    Entwicklung
+                <h2 (click)="showPokemonEvolutions()" [class.underline-fixed]="cardService.currentNavigation === 2"
+                    class="underline-animation">
+                    Entwicklungen
                 </h2>
             </div>
-            <div class="data-container" [ngStyle]="{'display': cardService.currentNavigation === 0 ? 'flex' : 'none'}">
-                <div class="d-f-g-20">
-                    <span>Kategorie:</span>
-                    <span>{{pokemon.genera}}</span>
-                </div>
-                <div class="d-f-g-20">
-                    <span>Größe:</span>
-                    <span>{{pokemon.height}} m</span>
-                </div>
-                <div class="d-f-g-20">
-                    <span>Gewicht:</span>
-                    <span>{{pokemon.weight}} kg</span>
-                </div>
-                <div class="d-f-g-20">
-                    <span>Ei-Gruppen:</span>
-                    <div>
-                        @for (group of pokemon.eggGroups; track $index) {
-                        <span>{{group}}</span>
-                        @if (!$last) {
-                        <span>,</span>
-                        }
-                        }
+            <div class="description-container">
+                <div class="data-container"
+                    [ngStyle]="{'display': cardService.currentNavigation === 0 ? 'flex' : 'none'}">
+                    <div class="d-f-g-20">
+                        <span>Kategorie:</span>
+                        <span>{{pokemon.genera}}</span>
+                    </div>
+                    <div class="d-f-g-20">
+                        <span>Größe:</span>
+                        <span>{{pokemon.height}} m</span>
+                    </div>
+                    <div class="d-f-g-20">
+                        <span>Gewicht:</span>
+                        <span>{{pokemon.weight}} kg</span>
+                    </div>
+                    <div class="d-f-g-20">
+                        <span>Ei-Gruppen:</span>
+                        <div>
+                            @for (group of pokemon.eggGroups; track $index) {
+                            <span>{{group}}</span>
+                            @if (!$last) {
+                            <span>,</span>
+                            }
+                            }
+                        </div>
+                    </div>
+                    <div class="d-f-g-20">
+                        <span>Ei-Schritte:</span>
+                        <span>{{pokemon.eggSteps}}</span>
                     </div>
                 </div>
-                <div class="d-f-g-20">
-                    <span>Ei-Schritte:</span>
-                    <span>{{pokemon.eggSteps}}</span>
+                <canvas #myChart width="650" height="450"
+                    [ngStyle]="{'display': cardService.currentNavigation === 1 ? 'unset' : 'none'}"></canvas>
+                <div class="evolution-container"
+                    [ngStyle]="{'display': cardService.currentNavigation === 2 ? 'flex' : 'none', 'justify-content': pokemon.evolutions.length > 3 ? 'flex-start': 'center'}">
+                    @for (pokemon of pokemon.evolutions; track $index) {
+                    <div class="pokemon-container">
+                        <img src="{{pokemon.img}}" alt="pokemon">
+                        <span>{{pokemon.name}}<br><span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span></span>
+                    </div>
+                    @if (!$last) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 80 50">
+                        <polygon class="wip-right" points="50,5 80,25 50,45 50,30 0,30 0,20 50,20"
+                            style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
+                    </svg>
+                    }
+                    }
                 </div>
-            </div>
-            <canvas #myChart width="650" height="450"
-                [ngStyle]="{'display': cardService.currentNavigation === 1 ? 'unset' : 'none'}"></canvas>
-            <div class="evolution-container"
-                [ngStyle]="{'display': cardService.currentNavigation === 2 ? 'flex' : 'none', 'justify-content': allEvolutions.length > 3 ? 'flex-start': 'center'}">
-                @for (pokemon of allEvolutions; track $index) {
-                <div class="pokemon-container">
-                    <img src="{{pokemon.img}}" alt="pokemon">
-                    <span>{{pokemon.name}}<br><span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span></span>
+                @if (apiService.loadingDescription) {
+                <div class="loading-container">
+                    Daten werden geladen...
                 </div>
-                @if (!$last) {
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 80 50">
-                    <polygon class="wip-right" points="50,5 80,25 50,45 50,30 0,30 0,20 50,20"
-                        style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
-                </svg>
-                }
                 }
             </div>
         </div>

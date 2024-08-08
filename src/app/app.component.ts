@@ -6,7 +6,7 @@ import { MainComponent } from './main/main.component';
 import { FooterComponent } from './footer/footer.component';
 import { BigCardComponent } from './big-card/big-card.component';
 import { CardService } from './services/card/card.service';
-import { LoadingScreenComponent } from './main/loading-screen/loading-screen.component';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 import { ApiService } from './services/api/api.service';
 
 @Component({

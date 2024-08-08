@@ -27,8 +27,8 @@ export class CardService {
     { 'Fee': 'rgb(209,124,209)' }
   ];
 
-  public currentPokemon!: Pokemon;
   public isOpen: boolean = false;
+  public searchPokemon: boolean = false;
   public currentNavigation: number = 1;
 
   public getColor(typeName: string): string {
