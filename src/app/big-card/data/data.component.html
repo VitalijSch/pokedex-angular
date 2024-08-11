@@ -1,0 +1,29 @@
+<div class="data-container">
+    <div class="d-f-g-20">
+        <span>Kategorie:</span>
+        <span>{{pokemon.genera}}</span>
+    </div>
+    <div class="d-f-g-20">
+        <span>Größe:</span>
+        <span>{{pokemon.height}} m</span>
+    </div>
+    <div class="d-f-g-20">
+        <span>Gewicht:</span>
+        <span>{{pokemon.weight}} kg</span>
+    </div>
+    <div class="d-f-g-20">
+        <span>Ei-Gruppen:</span>
+        <div>
+            @for (group of pokemon.eggGroups; track $index) {
+            <span>{{group}}</span>
+            @if (!$last) {
+            <span>,</span>
+            }
+            }
+        </div>
+    </div>
+    <div class="d-f-g-20">
+        <span>Ei-Schritte:</span>
+        <span>{{pokemon.eggSteps}}</span>
+    </div>
+</div>

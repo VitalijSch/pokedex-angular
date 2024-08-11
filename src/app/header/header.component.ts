@@ -26,6 +26,13 @@ export class HeaderComponent {
     }
   }
 
+  /**
+ * Searches for Pokémon whose names match the current search input.
+ * If the search string has at least 3 characters, it triggers the Pokémon search;
+ * otherwise, it clears the search results.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the search operation is complete.
+ */
   public async searchPokemon(): Promise<void> {
     if (this.search.length >= 3) {
       this.cardService.searchPokemon = true;

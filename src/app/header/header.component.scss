@@ -5,7 +5,7 @@
 .content-container {
     max-width: 1920px;
     margin: 0 auto;
-    padding:  25px;
+    padding: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,5 +38,28 @@
         font-size: 60px;
         font-weight: 700;
         color: white;
+    }
+}
+
+@media(max-width: 700px) {
+    .content-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media(max-width: 400px) {
+    .content-container {
+
+        input {
+            font-size: 16px;
+        }
+    }
+
+    .logo-container {
+
+        h1 {
+            font-size: 50px;
+        }
     }
 }

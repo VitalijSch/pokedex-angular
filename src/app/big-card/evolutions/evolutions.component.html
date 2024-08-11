@@ -1,0 +1,14 @@
+<div class="evolution-container">
+    @for (pokemon of pokemon.evolutions; track $index) {
+    <div class="pokemon-container">
+        <img src="{{pokemon.img}}" alt="pokemon">
+        <span>{{pokemon.name}}<br><span>{{cardService.handleZero(pokemon.id)}}{{pokemon.id}}</span></span>
+    </div>
+    @if (!$last) {
+    <svg class="d-none" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 80 50">
+        <polygon class="wip-right" points="50,5 80,25 50,45 50,30 0,30 0,20 50,20"
+            style="fill:rgba(255, 255, 255, 0.6);stroke:white;stroke-width:1" />
+    </svg>
+    }
+    }
+</div>

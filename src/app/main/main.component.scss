@@ -17,3 +17,10 @@
     flex-wrap: wrap;
     gap: 30px;
 }
+
+@media(max-width: 700px) {
+    .content-container {
+        height: calc(100vh - 200px);
+        padding: 20px;
+    }
+}

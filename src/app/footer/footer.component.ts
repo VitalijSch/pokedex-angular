@@ -8,6 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+  /**
+ * Retrieves the current year as a four-digit number.
+ * 
+ * @returns {number} The current year.
+ */
   public getCurrentYear(): number {
     return new Date().getFullYear();
   }

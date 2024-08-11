@@ -81,3 +81,9 @@
         text-align: center;
     }
 }
+
+@media(max-width: 400px) {
+    .card-container {
+        width: 268px;
+    }
+}

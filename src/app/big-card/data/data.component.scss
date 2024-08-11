@@ -1,0 +1,44 @@
+.data-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 30px;
+    font-weight: 900;
+
+    .d-f-g-20 {
+        display: flex;
+        gap: 20px;
+
+        span {
+
+            &:first-child {
+                color: #616161;
+            }
+
+            &:last-child {
+                color: #d0d0d0;
+            }
+        }
+
+        div {
+
+            span {
+                color: #d0d0d0;
+            }
+        }
+    }
+}
+
+@media(max-width: 550px) {
+    .data-container {
+        font-size: 16px;
+    }
+}
+
+@media(max-height: 800px) and (min-width: 550px) {
+    .data-container {
+        font-size: 16px;
+    }
+}

@@ -1,8 +1,11 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardService } from '../services/card/card.service';
 import { ApiService } from '../services/api/api.service';
 import { Chart, CategoryScale, LinearScale, BarController, BarElement } from 'chart.js';
+import { DataComponent } from './data/data.component';
+import { StatsComponent } from './stats/stats.component';
+import { EvolutionsComponent } from './evolutions/evolutions.component';
 
 Chart.register(CategoryScale, LinearScale, BarController, BarElement);
 
@@ -11,120 +14,31 @@ Chart.register(CategoryScale, LinearScale, BarController, BarElement);
   standalone: true,
   imports: [
     CommonModule,
+    DataComponent,
+    StatsComponent,
+    EvolutionsComponent
   ],
   templateUrl: './big-card.component.html',
   styleUrl: './big-card.component.scss'
 })
 export class BigCardComponent {
-  @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
-
   public cardService: CardService = inject(CardService);
   public apiService: ApiService = inject(ApiService);
 
   public pokemon: any = this.apiService.pokemon;
-  private chartInstance: Chart | undefined;
 
-  ngOnInit(): void {
- 
-  }
-
-  ngAfterViewInit(): void {
-    this.createOrUpdateChart();
-  }
-
-  createOrUpdateChart(): void {
-    const ctx = this.myChart.nativeElement.getContext('2d');
-    if (!ctx) {
-      console.error('Context not found!');
-      return;
-    }
-    if (this.chartInstance) {
-      this.chartInstance.destroy();
-    }
-    const data = {
-      labels: this.pokemon.stats.map((stat: { name: any; }) => stat.name),
-      datasets: [{
-        label: 'Pokémon Stats',
-        data: this.pokemon.stats.map((stat: { stat: any; }) => stat.stat),
-        backgroundColor: this.pokemon.stats.map((stat: { stat: number; }) => stat.stat <= 60 ? '#5cc0de' : '#5db85b'),
-        borderColor: 'black',
-        borderWidth: 1,
-      }],
-    };
-    const progressBar = {
-      id: 'progressBar',
-      beforeDatasetsDraw(chart: { getDatasetMeta?: any; ctx?: any; data?: any; chartArea?: any; scales?: any; }) {
-        const {
-          ctx,
-          data,
-          chartArea: { top, bottom, left, right, width, height },
-          scales: { x, y },
-        } = chart;
-        ctx.save();
-        const barHeight = height / data.labels.length;
-        ctx.strokeStyle = 'rgba(200, 200, 200, 0.5)';
-        ctx.fillStyle = 'rgba(200, 200, 200, 0.5)';
-        data.labels.forEach((label: any, index: number) => {
-          const dataPoint = chart.getDatasetMeta(0).data[index];
-          dataPoint.y = top + barHeight * (index + 0.8);
-          // Draw label
-          ctx.font = '24px sans-serif';
-          ctx.fillStyle = 'white';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(label, left - 200, dataPoint.y);
-          // Draw value
-          ctx.font = '24px sans-serif';
-          ctx.fillStyle = 'rgba(180, 180, 180, 1)';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(data.datasets[0].data[index], left + 70, dataPoint.y);
-        });
-      },
-    };
-    this.chartInstance = new Chart(ctx, {
-      type: 'bar',
-      data,
-      options: {
-        layout: {
-          padding: { left: 200 },
-        },
-        indexAxis: 'y',
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-            border: {
-              display: false,
-            },
-            ticks: { display: false },
-            min: -150,
-            max: 255,
-          },
-          y: {
-            beginAtZero: true,
-            grid: {
-              display: false,
-            },
-            border: {
-              display: false,
-            },
-            ticks: { display: false },
-          },
-        },
-      },
-      plugins: [progressBar],
-    });
-  }
-
+ /**
+   * Closes the big card by triggering the `handleBigCard` method of the `CardService`.
+   * @returns {void}
+   */
   public closeBigCard(): void {
     this.cardService.handleBigCard();
   }
 
+  /**
+   * Plays the cry sound of the current Pokémon.
+   * @returns {Promise<void>} A promise that resolves when the audio playback is initiated.
+   */
   public pokemonCrie(): Promise<void> {
     const audioElement = new Audio();
     audioElement.src = this.pokemon.crie;
@@ -132,65 +46,99 @@ export class BigCardComponent {
     return audioElement.play();
   }
 
+  /**
+   * Selects the next Pokémon in the list and updates the view with the new Pokémon's data.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon data has been updated.
+   */
   public async nextPokemon(): Promise<void> {
-    let currentIndex = this.apiService.pokemons.indexOf(this.pokemon);
-    this.apiService.pokemons.forEach((pokemon, index) => {
-      if (currentIndex === this.apiService.pokemons.length - 1) {
-        this.apiService.pokemon = this.apiService.pokemons[0];
+    let currentArray = this.apiService.foundPokemons.length > 0 ? this.apiService.foundPokemons : this.apiService.pokemons;
+    let currentIndex = currentArray.indexOf(this.pokemon);
+    this.selectNextPokemon(currentArray, currentIndex);
+    this.pokemon = this.apiService.pokemon;
+    this.handleChartCreationOrUpdate();
+    this.handlePokemonData();
+    this.handlePokemonStats();
+    this.handlePokemonForEvolution();
+  }
+
+  /**
+   * Selects the next Pokémon in the array based on the current index.
+   * @param {any[]} currentArray - The array of Pokémon.
+   * @param {number} currentIndex - The index of the current Pokémon.
+   * @returns {void}
+   */
+  private selectNextPokemon(currentArray: any, currentIndex: number): void {
+    currentArray.forEach((pokemon: { id: any; }, index: number) => {
+      if (currentIndex === currentArray.length - 1) {
+        this.apiService.pokemon = currentArray[0];
       } else {
         if (pokemon.id === this.pokemon.id) {
-          this.apiService.pokemon = this.apiService.pokemons[index + 1];
+          this.apiService.pokemon = currentArray[index + 1];
         }
       }
     });
-    this.pokemon = this.apiService.pokemon;
-    if (this.cardService.currentNavigation === 1) {
-      this.createOrUpdateChart();
-    }
-    if (this.cardService.currentNavigation === 0) {
-      this.apiService.loadingDescription = true;
-      await this.apiService.loadPokemonData(this.pokemon.id);
-      this.apiService.loadingDescription = false;
-    }
-    if (this.cardService.currentNavigation === 1) {
-      this.apiService.loadingDescription = true;
-      await this.apiService.loadPokemonStats(this.pokemon.id);
-      this.createOrUpdateChart();
-      this.apiService.loadingDescription = false;
-    }
-    if (this.cardService.currentNavigation === 2) {
-      this.apiService.loadingDescription = true;
-      await this.apiService.loadPokemonForEvolution(this.pokemon.id);
-      this.apiService.loadingDescription = false;
-    }
   }
 
-  public async perviousPokemon(): Promise<void> {
-    let currentIndex = this.apiService.pokemons.indexOf(this.pokemon);
-    this.apiService.pokemons.forEach((pokemon, index) => {
+  /**
+   * Selects the previous Pokémon in the list and updates the view with the new Pokémon's data.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon data has been updated.
+   */
+  public async previousPokemon(): Promise<void> {
+    let currentArray = this.apiService.foundPokemons.length > 0 ? this.apiService.foundPokemons : this.apiService.pokemons;
+    let currentIndex = currentArray.indexOf(this.pokemon);
+    this.selectPreviousPokemon(currentArray, currentIndex);
+    this.pokemon = this.apiService.pokemon;
+    this.handleChartCreationOrUpdate();
+    this.handlePokemonData();
+    this.handlePokemonStats();
+    this.handlePokemonForEvolution();
+  }
+
+  /**
+   * Selects the previous Pokémon in the array based on the current index.
+   * @param {any[]} currentArray - The array of Pokémon.
+   * @param {number} currentIndex - The index of the current Pokémon.
+   * @returns {void}
+   */
+  private selectPreviousPokemon(currentArray: any, currentIndex: number): void {
+    currentArray.forEach((pokemon: { id: any; }, index: number) => {
       if (currentIndex === 0) {
-        this.apiService.pokemon = this.apiService.pokemons[this.apiService.pokemons.length - 1];
+        this.apiService.pokemon = currentArray[currentArray.length - 1];
       } else {
         if (pokemon.id === this.pokemon.id) {
-          this.apiService.pokemon = this.apiService.pokemons[index - 1];
+          this.apiService.pokemon = currentArray[index - 1];
         }
       }
     });
-    this.pokemon = this.apiService.pokemon;
+  }
+
+  /**
+   * Handles the creation or update of the chart if the current navigation index is 1.
+   * @returns {void}
+   */
+  private handleChartCreationOrUpdate(): void {
     if (this.cardService.currentNavigation === 1) {
-      this.createOrUpdateChart();
+      this.apiService.createOrUpdateChart();
     }
+  }
+
+  /**
+   * Loads and handles Pokémon data if the current navigation index is 0.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon data has been loaded.
+   */
+  private async handlePokemonData(): Promise<void> {
     if (this.cardService.currentNavigation === 0) {
       this.apiService.loadingDescription = true;
       await this.apiService.loadPokemonData(this.pokemon.id);
       this.apiService.loadingDescription = false;
     }
-    if (this.cardService.currentNavigation === 1) {
-      this.apiService.loadingDescription = true;
-      await this.apiService.loadPokemonStats(this.pokemon.id);
-      this.createOrUpdateChart();
-      this.apiService.loadingDescription = false;
-    }
+  }
+
+  /**
+   * Loads and handles Pokémon evolution data if the current navigation index is 2.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon evolution data has been loaded.
+   */
+  private async handlePokemonForEvolution(): Promise<void> {
     if (this.cardService.currentNavigation === 2) {
       this.apiService.loadingDescription = true;
       await this.apiService.loadPokemonForEvolution(this.pokemon.id);
@@ -198,25 +146,57 @@ export class BigCardComponent {
     }
   }
 
+  /**
+   * Loads and handles Pokémon stats if the current navigation index is 1, and updates the chart.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon stats have been loaded and the chart updated.
+   */
+  private async handlePokemonStats(): Promise<void> {
+    if (this.cardService.currentNavigation === 1) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonStats(this.pokemon.id);
+      this.apiService.createOrUpdateChart();
+      this.apiService.loadingDescription = false;
+    }
+  }
+
+  /**
+   * Displays the Pokémon data by loading it and setting the navigation to the appropriate index.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon data has been loaded.
+   */
   public async showPokemonData(): Promise<void> {
-    this.apiService.loadingDescription = true;
-    this.cardService.showCurrentNavigation(0);
+    this.startLoadingAndShowNavigation(0);
     await this.apiService.loadPokemonData(this.pokemon.id);
     this.apiService.loadingDescription = false;
   }
 
+  /**
+   * Displays the Pokémon stats by loading them and setting the navigation to the appropriate index.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon stats have been loaded and the chart updated.
+   */
   public async showPokemonStats(): Promise<void> {
-    this.apiService.loadingDescription = true;
-    this.cardService.showCurrentNavigation(1);
+    this.startLoadingAndShowNavigation(1);
     await this.apiService.loadPokemonStats(this.pokemon.id);
-    this.createOrUpdateChart();
+    this.apiService.createOrUpdateChart();
     this.apiService.loadingDescription = false;
   }
 
+  /**
+   * Displays the Pokémon evolutions by loading them and setting the navigation to the appropriate index.
+   * @returns {Promise<void>} A promise that resolves when the Pokémon evolution data has been loaded.
+   */
   public async showPokemonEvolutions(): Promise<void> {
-    this.apiService.loadingDescription = true;
-    this.cardService.showCurrentNavigation(2);
+    this.startLoadingAndShowNavigation(2);
     await this.apiService.loadPokemonForEvolution(this.pokemon.id);
     this.apiService.loadingDescription = false;
+  }
+
+  /**
+   * Starts loading the Pokémon data and shows the current navigation view.
+   * @param {number} navigation - The index of the navigation to show.
+   * @returns {void}
+   */
+  private startLoadingAndShowNavigation(navigation: number): void {
+    this.apiService.loadingDescription = true;
+    this.cardService.showCurrentNavigation(navigation);
   }
 }

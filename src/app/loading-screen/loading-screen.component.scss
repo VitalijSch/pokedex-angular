@@ -19,19 +19,34 @@
         animation: spin 2s linear infinite;
     }
 
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
     span {
         font-size: 60px;
         font-weight: 900;
         color: white;
+        text-align: center;
+    }
+}
+
+@media(max-width: 1180px) {
+    .loading-container {
+        flex-direction: column;
+
+        span {
+            font-size: 30px;
+        }
+    }
+}
+
+@media(max-width: 750px) {
+    .loading-container {
+
+        svg {
+            width: 150px;
+            height: 150px;
+        }
+
+        span {
+            font-size: 30px;
+        }
     }
 }
