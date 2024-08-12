@@ -30,6 +30,7 @@ export class ApiService {
 
   public startLoad: number = 0;
   public endLoad: number = 20;
+  public search: string = '';
 
   public loadingPokemon: boolean = true;
   public loadingDescription: boolean = false;
@@ -556,5 +557,14 @@ export class ApiService {
         ticks: { display: false },
       },
     };
+  }
+
+  /**
+   * Sets the search input for the Pokémon search.
+   * 
+   * @param {string} searchContent - The search string to be set as the current search input.
+   */
+  public setSearchInput(searchContent: string): void {
+    this.search = searchContent;
   }
 }

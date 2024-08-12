@@ -11,6 +11,7 @@
             </svg>
             <h1>Pokédex</h1>
         </div>
-        <input #searchInput [disabled]="apiService.loadingPokemon || cardService.isOpen" [(ngModel)]="search" (input)="searchPokemon()" type="text" name="search" id="search" placeholder="Pokémon Namen (Englisch)...">
+        <input #searchInput [disabled]="apiService.loadingPokemon || cardService.isOpen" (input)="resetSearchPokemon()" [(ngModel)]="search" type="text" name="search" id="search" placeholder="Pokémon Namen (Englisch)...">
+        <button (click)="searchPokemon()" class="pokemon-button">Suchen</button>
     </div>
 </div>

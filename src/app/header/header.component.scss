@@ -30,6 +30,32 @@
         border-radius: 30px;
         cursor: pointer;
     }
+
+    .pokemon-button {
+        background-color: #c83738;
+        color: #ffffff;
+        border: 2px solid #c83738;
+        border-radius: 12px;
+        font-size: 18px;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .pokemon-button:hover {
+        background-color: #ffffff;
+        color: #c83738;
+        border-color: #c83738;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .pokemon-button:active {
+        transform: scale(0.95);
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+    }
 }
 
 .logo-container {
@@ -41,7 +67,7 @@
     }
 }
 
-@media(max-width: 700px) {
+@media(max-width: 850px) {
     .content-container {
         flex-direction: column;
         gap: 20px;

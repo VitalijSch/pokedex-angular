@@ -26,20 +26,33 @@ export class HeaderComponent {
     }
   }
 
-  /**
- * Searches for Pokémon whose names match the current search input.
- * If the search string has at least 3 characters, it triggers the Pokémon search;
- * otherwise, it clears the search results.
+/**
+ * Asynchronously searches for Pokémon names if the search input is at least 3 characters long.
+ * - If the search input meets the length criteria, it sets the search input in the API service,
+ *   marks the `searchPokemon` flag as true in the card service, and loads all Pokémon names that
+ *   match the search input.
  * 
  * @returns {Promise<void>} A promise that resolves when the search operation is complete.
  */
-  public async searchPokemon(): Promise<void> {
-    if (this.search.length >= 3) {
+public async searchPokemon(): Promise<void> {
+  if (this.search.length >= 3) {
+      this.apiService.setSearchInput(this.search);
       this.cardService.searchPokemon = true;
       await this.apiService.loadAllPokemonNames(this.search.toLowerCase());
-    } else {
+  }
+}
+
+/**
+* Resets the Pokémon search if the search input is less than 3 characters long.
+* - If the search input length is less than 3, it sets the `searchPokemon` flag to false
+*   in the card service, clears the list of found Pokémon in the API service, and resets
+*   the search input.
+*/
+public resetSearchPokemon(): void {
+  if (this.search.length < 3) {
       this.cardService.searchPokemon = false;
       this.apiService.foundPokemons = [];
-    }
+      this.apiService.search = '';
   }
+}
 }

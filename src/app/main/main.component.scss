@@ -16,11 +16,17 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 30px;
+
+    span {
+        font-size: 30px;
+        color: white;
+        text-align: center;
+    }
 }
 
-@media(max-width: 700px) {
+@media(max-width: 850px) {
     .content-container {
-        height: calc(100vh - 200px);
+        height: calc(100vh - 265px);
         padding: 20px;
     }
 }

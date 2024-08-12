@@ -1,11 +1,13 @@
 <div class="background-container">
     <div class="content-container" (scroll)="onScroll($event)">
-        @if (apiService.foundPokemons.length > 0) {
-        @for (pokemon of apiService.foundPokemons; track $index) {
+        @if(apiService.foundPokemons.length === 0 && apiService.search !== '') {
+        <span>Kein Pokemon mit dem Namen gefunden.</span>
+        }@else if(apiService.foundPokemons.length === 0 && apiService.search === '') {
+        @for (pokemon of apiService.pokemons; track $index) {
         <app-card [pokemon]="pokemon"></app-card>
         }
-        } @else {
-        @for (pokemon of apiService.pokemons; track $index) {
+        }@else if (apiService.foundPokemons.length > 0) {
+        @for (pokemon of apiService.foundPokemons; track $index) {
         <app-card [pokemon]="pokemon"></app-card>
         }
         }
