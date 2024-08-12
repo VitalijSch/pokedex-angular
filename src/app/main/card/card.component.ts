@@ -25,6 +25,7 @@ export class CardComponent {
   * @returns {Promise<void>} A promise that resolves when the big card is opened and the Pokémon details are displayed.
   */
   public async openBigCard(): Promise<void> {
+    document.body.style.overflowY = 'hidden';
     this.cardService.handleBigCard();
     this.apiService.pokemon = this.pokemon;
     this.showPokemonData();

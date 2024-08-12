@@ -27,10 +27,10 @@ export class BigCardComponent {
 
   public pokemon: any = this.apiService.pokemon;
 
- /**
-   * Closes the big card by triggering the `handleBigCard` method of the `CardService`.
-   * @returns {void}
-   */
+  /**
+    * Closes the big card by triggering the `handleBigCard` method of the `CardService`.
+    * @returns {void}
+    */
   public closeBigCard(): void {
     this.cardService.handleBigCard();
   }
@@ -51,14 +51,17 @@ export class BigCardComponent {
    * @returns {Promise<void>} A promise that resolves when the Pokémon data has been updated.
    */
   public async nextPokemon(): Promise<void> {
+    if(this.apiService.loadingDescription) {
+      return;
+    }
     let currentArray = this.apiService.foundPokemons.length > 0 ? this.apiService.foundPokemons : this.apiService.pokemons;
     let currentIndex = currentArray.indexOf(this.pokemon);
     this.selectNextPokemon(currentArray, currentIndex);
     this.pokemon = this.apiService.pokemon;
     this.handleChartCreationOrUpdate();
-    this.handlePokemonData();
-    this.handlePokemonStats();
-    this.handlePokemonForEvolution();
+    await this.handlePokemonData();
+    await this.handlePokemonStats();
+    await this.handlePokemonForEvolution();
   }
 
   /**
@@ -84,14 +87,17 @@ export class BigCardComponent {
    * @returns {Promise<void>} A promise that resolves when the Pokémon data has been updated.
    */
   public async previousPokemon(): Promise<void> {
+    if(this.apiService.loadingDescription) {
+      return;
+    }
     let currentArray = this.apiService.foundPokemons.length > 0 ? this.apiService.foundPokemons : this.apiService.pokemons;
     let currentIndex = currentArray.indexOf(this.pokemon);
     this.selectPreviousPokemon(currentArray, currentIndex);
     this.pokemon = this.apiService.pokemon;
     this.handleChartCreationOrUpdate();
-    this.handlePokemonData();
-    this.handlePokemonStats();
-    this.handlePokemonForEvolution();
+    await this.handlePokemonData();
+    await this.handlePokemonStats();
+    await this.handlePokemonForEvolution();
   }
 
   /**
@@ -135,18 +141,6 @@ export class BigCardComponent {
   }
 
   /**
-   * Loads and handles Pokémon evolution data if the current navigation index is 2.
-   * @returns {Promise<void>} A promise that resolves when the Pokémon evolution data has been loaded.
-   */
-  private async handlePokemonForEvolution(): Promise<void> {
-    if (this.cardService.currentNavigation === 2) {
-      this.apiService.loadingDescription = true;
-      await this.apiService.loadPokemonForEvolution(this.pokemon.id);
-      this.apiService.loadingDescription = false;
-    }
-  }
-
-  /**
    * Loads and handles Pokémon stats if the current navigation index is 1, and updates the chart.
    * @returns {Promise<void>} A promise that resolves when the Pokémon stats have been loaded and the chart updated.
    */
@@ -156,6 +150,20 @@ export class BigCardComponent {
       await this.apiService.loadPokemonStats(this.pokemon.id);
       this.apiService.createOrUpdateChart();
       this.apiService.loadingDescription = false;
+    }
+  }
+
+  /**
+ * Loads and handles Pokémon evolution data if the current navigation index is 2.
+ * @returns {Promise<void>} A promise that resolves when the Pokémon evolution data has been loaded.
+ */
+  private async handlePokemonForEvolution(): Promise<void> {
+    if (this.cardService.currentNavigation === 2) {
+      this.apiService.loadingDescription = true;
+      await this.apiService.loadPokemonForEvolution(this.pokemon.id);
+      setTimeout(() => {
+        this.apiService.loadingDescription = false;
+      }, 1000);
     }
   }
 

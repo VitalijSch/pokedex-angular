@@ -14,7 +14,7 @@ import { CardService } from '../services/card/card.service';
 })
 export class HeaderComponent {
   public apiService: ApiService = inject(ApiService);
-  private cardService: CardService = inject(CardService);
+  public cardService: CardService = inject(CardService);
 
   @ViewChild('searchInput') searchInput!: ElementRef;
 
